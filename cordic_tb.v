@@ -76,6 +76,20 @@ module cordic_tb;
     rst = 0;
 
     // ========================================================
+    // TEST PHASE 0: The "Garbage" Injection
+    // Goal: Cover the 'default' case by forcing Unknowns (X)
+    // ========================================================
+    $display("Starting Phase 0: Injecting Unknowns (X)...");
+    @(negedge clk);
+    valid_in = 1;
+    angle = 32'hXXXX_XXXX; // Force the quadrant wire to become 2'bXX
+    @(negedge clk);
+    valid_in = 0;
+    // Wait for the pipeline to clear the garbage
+    repeat(20) @(posedge clk);
+
+    
+    // ========================================================
     // TEST PHASE 1: Sequential Sweep (0 to 360)
     // Goal: Statement and Block Coverage
     // ========================================================

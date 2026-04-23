@@ -91,6 +91,12 @@ module CORDIC(clk, rst, valid_in, angle, cosine, sine, valid_out);
             // so set angle[31:30] from 10 to 11 and keep the rest of the bits the same to effectively add 90 degrees from the angle
             z[0] <= {2'b11,angle[29:0]}; // add pi/2 to angles in this quadrant
         end
+        // Catch X and Z states!
+        default: begin
+                x[0] <= 0;
+                y[0] <= 0;
+                z[0] <= 0;
+            end
         endcase
     end
   end
